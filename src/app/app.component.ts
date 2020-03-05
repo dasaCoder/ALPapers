@@ -18,7 +18,8 @@ export class AppComponent {
   task: AngularFireUploadTask;
   ref: AngularFireStorageReference;
   downloadURL :Observable<any>;
-  image:string;
+  imageURL:string;
+  imageFile: any;
 
   paperForm = new FormGroup({
 
@@ -52,30 +53,39 @@ export class AppComponent {
     }
   }
 
-  upload(event) {
-      // create a random id
-    const randomId = Math.random().toString(36).substring(2);
+  setImage(event) {
+    this.imageFile = event.target.files[0]
+  }
+
+  upload() {
+
+    if(this.imageFile == undefined) {
+      alert("Please upload file");
+      return;
+    }
+    // create a random id
+    const randomId = Math.floor(Date.now() / 1000).toString();
     // create a reference to the storage bucket location
     this.ref = this.afStorage.ref(randomId);
     // the put method creates an AngularFireUploadTask
     // and kicks off the upload
-    this.task = this.ref.put(event.target.files[0]);
+    this.task = this.ref.put(this.imageFile);
     this.task.snapshotChanges().pipe(
       finalize(() => {
         this.downloadURL = this.ref.getDownloadURL()
         this.downloadURL.subscribe(url => {
-          this.image = url;
-          console.log(this.image);
+          this.imageURL = url;
+          console.log(this.imageURL);
+
+          this.saveOnFirestore();
         });
         
       })
-    )
-    .subscribe(() => {
-
-      console.log(this.image);
-    });
-
+    ).subscribe();
 
   }
 
+  saveOnFirestore() {
+
+  }
 }

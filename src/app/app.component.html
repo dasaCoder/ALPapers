@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
 
     <mat-card>
-      <form class="example-form" [formGroup]="paperForm" (ngSubmit)="onFormSubmit()">
+      <form class="example-form" [formGroup]="paperForm" (ngSubmit)="upload()">
 
         <mat-form-field class="example-full-width">
           <mat-label>Subject</mat-label>
@@ -32,14 +32,18 @@
 
         </mat-form-field> 
 
+
+        <input mat-input type="file" (change)="setImage($event)" accept=".png,.jpg" />
+
+
         <button mat-raised-button type="submit">save</button>
 
       </form>
     </mat-card>
 
-    <mat-card>
+    <!-- <mat-card>
       <label for="file">File:</label>
-      <input type="file" (change)="upload($event)" accept=".png,.jpg" />
-    </mat-card>
+      <input mat-input type="file" (change)="upload($event)" accept=".png,.jpg" />
+    </mat-card> -->
  
   </div>
