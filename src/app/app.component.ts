@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { AngularFireDatabase } from '@angular/fire/database';
+
 import { Observable, of } from 'rxjs';
 import {  finalize } from 'rxjs/operators';
 
@@ -20,6 +23,7 @@ export class AppComponent {
   downloadURL :Observable<any>;
   imageURL:string;
   imageFile: any;
+  dataObj: any = [];
 
   paperForm = new FormGroup({
 
@@ -41,7 +45,7 @@ export class AppComponent {
     return this.paperForm.get('qNumberValidator');
   }
 
-  constructor(private afStorage: AngularFireStorage) {
+  constructor(private afStorage: AngularFireStorage, private firedb: AngularFireDatabase) {
 
   }
 
@@ -50,6 +54,8 @@ export class AppComponent {
 
       alert(this.paperForm.get('qNumberValidator').value);
       console.log(this.paperForm.value);
+      this.dataObj = this.paperForm.value;
+      this.upload();
     }
   }
 
@@ -75,8 +81,10 @@ export class AppComponent {
         this.downloadURL = this.ref.getDownloadURL()
         this.downloadURL.subscribe(url => {
           this.imageURL = url;
-          console.log(this.imageURL);
 
+          this.dataObj['url'] = this.imageURL;
+
+          console.log(this.dataObj);
           this.saveOnFirestore();
         });
         
@@ -86,6 +94,8 @@ export class AppComponent {
   }
 
   saveOnFirestore() {
-
+    this.firedb
+    .list("/answers")
+    .push(this.dataObj);
   }
 }

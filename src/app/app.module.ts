@@ -1,8 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { environment } from "src/environments/environment";
 
-import {AngularFireModule} from 'angularfire2';
+// import {AngularFireModule} from 'angularfire2';
 import {AngularFireStorageModule} from 'angularfire2/storage'
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,13 +33,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatSelectModule,
     ReactiveFormsModule,
     MatButtonModule,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyDGk0Ji7Yt28nrFEcdjGmhsx7LmXC3Oj6I",
-      authDomain: "asia-south1",
-      storageBucket: "gs://examhelp-c87f6.appspot.com/",
-      projectId: "examhelp-c87f6",
-    }),
-    AngularFireStorageModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
