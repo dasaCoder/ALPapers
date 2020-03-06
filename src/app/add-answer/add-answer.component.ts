@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
@@ -6,14 +6,13 @@ import { AngularFireDatabase } from '@angular/fire/database';
 
 import { Observable, of } from 'rxjs';
 import {  finalize } from 'rxjs/operators';
-import { ReadVarExpr } from '@angular/compiler';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-add-answer',
+  templateUrl: './add-answer.component.html',
+  styleUrls: ['./add-answer.component.css']
 })
-export class AppComponent {
+export class AddAnswerComponent implements OnInit {
   title = 'al-test';
   qType: string;
   qNumber: string;
@@ -48,14 +47,14 @@ export class AppComponent {
     return this.paperForm.get('qNumberValidator');
   }
 
-  constructor(private afStorage: AngularFireStorage, private firedb: AngularFireDatabase) {
+  constructor(private afStorage: AngularFireStorage, private firedb: AngularFireDatabase) {}
 
-  }
+  ngOnInit(){}
 
   onFormSubmit() {
     if(this.paperForm.valid) {
 
-      //alert(this.paperForm.get('qNumberValidator').value);
+      alert(this.paperForm.get('qNumberValidator').value);
       console.log(this.paperForm.value);
       this.dataObj = this.paperForm.value;
       this.upload();
@@ -111,4 +110,5 @@ export class AppComponent {
 
     location.reload();
   }
+
 }
