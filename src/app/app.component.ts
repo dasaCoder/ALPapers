@@ -21,6 +21,7 @@ export class AppComponent {
   task: AngularFireUploadTask;
   ref: AngularFireStorageReference;
   downloadURL :Observable<any>;
+  uploadProgress: Observable<number>;
   imageURL:string;
   imageFile: any;
   dataObj: any = [];
@@ -76,9 +77,12 @@ export class AppComponent {
     // the put method creates an AngularFireUploadTask
     // and kicks off the upload
     this.task = this.ref.put(this.imageFile);
+    this.uploadProgress = this.task.percentageChanges();
+
     this.task.snapshotChanges().pipe(
       finalize(() => {
-        this.downloadURL = this.ref.getDownloadURL()
+        this.downloadURL = this.ref.getDownloadURL();
+
         this.downloadURL.subscribe(url => {
           this.imageURL = url;
 
@@ -97,5 +101,7 @@ export class AppComponent {
     this.firedb
     .list("/answers")
     .push(this.dataObj);
+
+    location.reload();
   }
 }

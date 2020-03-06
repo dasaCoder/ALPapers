@@ -32,9 +32,12 @@
 
         </mat-form-field> 
 
+        <div>
+          <input mat-input type="file" (change)="setImage($event)" accept=".png,.jpg" />
+        </div>
 
-        <input mat-input type="file" (change)="setImage($event)" accept=".png,.jpg" />
-
+        
+        <mat-progress-bar *ngIf="uploadProgress" mode="determinate" [value]="(uploadProgress | async)"></mat-progress-bar>
 
         <button mat-raised-button type="submit">save</button>
 
