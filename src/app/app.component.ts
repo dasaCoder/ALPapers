@@ -6,6 +6,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 
 import { Observable, of } from 'rxjs';
 import {  finalize } from 'rxjs/operators';
+import { ReadVarExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class AppComponent {
   imageURL:string;
   imageFile: any;
   dataObj: any = [];
+  imageSrc: any;
 
   paperForm = new FormGroup({
 
@@ -61,7 +63,12 @@ export class AppComponent {
   }
 
   setImage(event) {
-    this.imageFile = event.target.files[0]
+    console.log(event.target.files);
+    this.imageFile = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = e => this.imageSrc = reader.result;
+    reader.readAsDataURL(this.imageFile);
   }
 
   upload() {

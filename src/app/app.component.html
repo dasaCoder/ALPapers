@@ -32,14 +32,22 @@
 
         </mat-form-field> 
 
-        <div>
-          <input mat-input type="file" (change)="setImage($event)" accept=".png,.jpg" />
-        </div>
+        <div style="margin: 10px;">
 
-        
+            <label class="custom-file-upload">
+              <input  type="file"  (change)="setImage($event)" accept=".png,.jpg"/>
+              <i class="fa fa-cloud-upload"></i> Select File
+            </label>
+            <span *ngIf="imageFile">{{imageFile['name']}}</span>
+        </div>
         <mat-progress-bar *ngIf="uploadProgress" mode="determinate" [value]="(uploadProgress | async)"></mat-progress-bar>
 
-        <button mat-raised-button type="submit">save</button>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+           <img *ngIf="imageFile" [src]="imageSrc" class="imgPreview"/>
+        </div>
+
+
+        <button mat-raised-button color="primary" type="submit" style="border-radius: 50px;float: right;">save</button>
 
       </form>
     </mat-card>
