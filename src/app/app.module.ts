@@ -19,6 +19,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     ReactiveFormsModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatToolbarModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
